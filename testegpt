@@ -1,0 +1,32 @@
+fron kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
+
+class ChatApp(App):
+    def build(self):
+        # Cria um layout de caixa vertical para colocar os widgets
+        layout = BoxLayout(orientation='vertical')
+
+        # Cria uma caixa de texto para a entrada de mensagens
+        input_box = TextInput()
+        layout.add_widget(input_box)
+
+        # Cria um botão para enviar a mensagem
+        send_button = Button(text='Enviar')
+        send_button.bind(on_press=self.send_message)
+        layout.add_widget(send_button)
+
+        # Cria uma caixa de texto para exibir as mensagens enviadas
+        self.message_box = TextInput(readonly=True)
+        layout.add_widget(self.message_box)
+
+        return layout
+
+    def send_message(self, instance):
+        message = self.input_box.text
+        self.message_box.text += '\n' + message
+        self.input_box.text = ''
+
+if __name__ == '__main__':
+    ChatApp().run()
